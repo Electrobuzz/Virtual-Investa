@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.17/dist/tailwind.min.css">
+    <title>Dashboard | Virtual Investa</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333333;
+            margin-top: 20px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            color: #555555;
+        }
+
+        /* Navigation styles */
+        nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background-color: #343a40;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Footer styles */
+        footer {
+            text-align: center;
+            color: #777;
+            padding: 20px;
+            background-color: #343a40;
+            position: center;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #777;
+        }
+
+        /* Initially hide all menus */
+        .menu {
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <header class="container py-3">
+        <h1 class="text-center text-primary">Dashboard</h1>
+        <nav class="nav justify-content-center mb-4">
+            <a class="nav-link" href="./main.ejs">Home</a>
+            <a class="nav-link" href="./portfolio.ejs">Portfolio</a>
+            <a class="nav-link" href="./contact.ejs">Contact</a>
+        </nav>
+    </header>
+
+    <main class="container bg-white p-4 rounded shadow">
+        <div class="userinfo mb-4">
+            <p class="font-weight-bold">Name: <span class="result text-success"><%= name %></span></p>
+            <p class="font-weight-bold">Rollno: <span class="result text-success"><%= roll %></span></p>
+        </div>
+
+        <p class="expense text-info font-weight-bold mb-4">Total Investment: <span class="result text-danger">Rs. <%= monthlyExpense %></span></p>
+        
+        <!-- Display available fund -->
+        <p class="fund text-info font-weight-bold mb-4">Available Fund: <span id="fundValue">Rs. 500,000</span></p>
+
+        <div class="form-group">
+            <label for="stock">Select Stock</label>
+            <select id="stock" class="form-control">
+                <option disabled selected>Select Stock</option>
+                <option value="13">Zomato.NS (100 Rs)</option>
+                <option value="4">IDBI.NS (100 Rs)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="payment">Quantity</label>
+            <input type="number" id="payment" placeholder="Quantity" class="form-control">
+        </div>
+        
+        <button onclick="payy()" type="button" id="pay" class="btn btn-primary">Pay</button>
+    </main>
+
+    <footer class="container text-center py-3">
+        <p>&copy; 2023 - Virtual Investa Web App</p>
+    </footer>
+    <script>
+        const fundEl = document.getElementById('fundValue');
+        const stockEl = document.getElementById('stock');
+        const payEl = document.getElementById('payment');
+        const payBtn = document.getElementById('pay');
+        const cookies = document.cookie.split(';');
+        let token = '';
+        cookies.forEach((cookie) => {
+            const a = cookie.split('=');
+            if (a[0] === 'token') {
+                token = a[1];
+            }
+        });
+
+        function payy() {
+            const stockValue = stockEl.value;
+            const quantity = payEl.value;
+            const formData = new URLSearchParams();
+            formData.append('stock', stockValue);
+            formData.append('quantity', quantity);
+            formData.append('studentId', token);
+            stockEl.readOnly = true;
+            payEl.readOnly = true;
+            payBtn.disabled = true;
+            payBtn.innerHTML = 'Processing...';
+            
+            // Simulated payment processing delay
+            setTimeout(() => {
+                fetch('/pay', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status) {
+                        alert('Payment done for ' + quantity * 100 + ' Rupees');
+                    } else {
+                        alert('Error Occurred');
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    alert('Payment Failed');
+                })
+                .finally(() => {
+                    location.reload();
+                });
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

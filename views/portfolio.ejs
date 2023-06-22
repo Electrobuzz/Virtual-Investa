@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <title>Portfolio</title>
+        <style>/* Global styles */
+          body {
+              font-family: Arial, sans-serif;
+              background-color: #f1f1f1;
+              margin: 0;
+              padding: 0;
+               
+            }
+            
+            .container {
+              max-width: 800px;
+              margin: 0 auto;
+              padding: 20px;
+              background-color: #ffffff;
+              box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+              border-radius: 5px;
+            }
+            
+            h1 {
+              text-align: center;
+              color: #333333;
+              margin-top: 20px;
+            }
+            
+            p {
+              text-align: center;
+              font-size: 18px;
+              color: #555555;
+            }
+            
+            /* Navigation styles */
+            nav {
+              display: flex;
+              justify-content: space-around;
+              padding: 20px;
+              background-color: #343a40;
+            }
+            
+            nav a {
+              color: white;
+              text-decoration: none;
+            }
+            
+            /* Table styles */
+            table {
+              width: 100%;
+              margin: 20px 0;
+              border-collapse: collapse;
+            }
+            
+            table, th, td {
+              border: 1px solid #ddd;
+              padding: 15px;
+              text-align: center;
+            }
+            
+            table th {
+              background-color: #4CAF50;
+              color: white;
+            }
+            
+            /* Footer styles */
+            footer {
+              text-align: center;
+              color: #777;
+              padding: 20px;
+              background-color: #343a40;
+              position: center ;
+              width: 100%;
+              bottom: 0;
+            }
+            
+            footer a {
+              color: #4CAF50;
+              text-decoration: none;
+            }
+            
+            footer a:hover {
+              color: #777;
+            }
+          
+          /* Initially hide all menus */
+          .menu {
+              display: none;
+            }
+            
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-top: 1em;
+            }
+            
+            table th, table td {
+              border: 1px solid #ddd;
+              padding: 8px;
+              text-align: left;
+            }
+            
+            table th {
+              padding-top: 12px;
+              padding-bottom: 12px;
+              text-align: left;
+              background-color: #4CAF50;
+              color: white;
+            }
+            
+            
+            </style>
+    </head>
+    
+<body>
+    <nav>
+        <a href="./main.ejs">Home</a>
+        <a href="portfolio.ejs">Portfolio</a>
+        <a href="./contact.ejs" class="active">Contact</a>
+      </nav>
+
+  <div class="container">
+    
+
+    <div id="zomato" class="stock">
+      <h2>Your Portfolio</h2>
+      <table>
+          <tr>
+              <th>Stock Name</th>
+              <th>Price</th>
+              <th>Change</th>
+          </tr>
+          <tr>
+              <td>Zomato</td>
+              <td>Rs. 100</td>
+              <td>+4%</td>
+          </tr>
+          <tr>
+            <td>ONGC</td>
+            <td>Rs. 100</td>
+            <td>-2%</td>
+        </tr>
+        <tr>
+          <td>HDFC</td>
+          <td>Rs. 100</td>
+          <td>+19%</td>
+      </tr>
+      <tr>
+        <td>Total</td>
+        <td>Rs. 300</td>
+        <td>+21%</td>
+    </tr>
+      </table>
+  </div>
+
+
+    <!-- and so on for each day -->
+    <!-- ... -->
+
+  </div>
+
+  <footer>
+    <p>2023 Mess Management System | <a href="mailto:admin@mess.com">admin@mess.com</a></p>
+  </footer>
+
+  <script>
+    document.getElementById('day').addEventListener('change', function() {
+      // Hide all menus
+      const menus = document.getElementsByClassName('menu');
+      for (let i = 0; i < menus.length; i++) {
+        menus[i].style.display = 'none';
+      }
+
+      // Show selected day's menu
+      const selectedDay = this.value;
+      document.getElementById(selectedDay).style.display = 'block';
+    });
+  </script>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</html>
